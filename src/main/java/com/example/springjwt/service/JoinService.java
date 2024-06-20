@@ -29,4 +29,20 @@ public class JoinService {
         userEntity.setRole("ROLE_ADMIN");
         userRepository.save(userEntity);
     }
+
+    public void userJoinProcess(JoinDTO joinDTO){
+        String username = joinDTO.getUsername();
+        String password = joinDTO.getPassword();
+
+        Boolean isExist = userRepository.existsByUsername(username);
+
+        if(isExist)
+            return;
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(username);
+        userEntity.setPassword(passwordEncoder.encode(password));
+        userEntity.setRole("ROLE_USER");
+        userRepository.save(userEntity);
+    }
 }
